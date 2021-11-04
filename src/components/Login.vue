@@ -5,19 +5,19 @@
       <div class="modal-container">
         <div class="main"></div>
         <div class="form">
-          <h3>创建账户</h3>
+          <h3 @click="showRegister">创建账户</h3>
           <div v-show="isShowRegister" class="register">
             <input type="text" v-model="register.username" placeholder="用户名">
             <input type="password" v-model="register.password" placeholder="密码">
             <p :class="{error: register.isError}">{{register.notice}}</p>
-            <div class="button">创建账号</div>
+            <div class="button" @click="onRegister">创建账号</div>
           </div>
-          <h3>登录</h3>
+          <h3 @click="showLogin">登录</h3>
           <div v-show="isShowLogin" class="login">
             <input type="text" v-model="login.username" placeholder="输入用户名">
             <input type="password" v-model="login.password" placeholder="密码">
             <p :class="{error: login.isError}">{{login.notice}}</p>
-            <div class="button"> 登录</div>
+            <div class="button" @click="onLogin"> 登录</div>
           </div>
         </div>
       </div>
@@ -31,8 +31,8 @@ export default {
   name:'Login',
   data(){
     return {
-      isShowLogin: false,
-      isShowRegister: true,
+      isShowLogin: true,
+      isShowRegister: false,
       login:{
         username:'',
         password:'',
@@ -44,6 +44,64 @@ export default {
         password:'',
         notice:'创建账号请牢记您的用户名和密码',
         isError: false
+      }
+    }
+  },
+  methods:{
+    showRegister(){
+      this.isShowRegister = true
+      this.isShowLogin = false
+    },
+    showLogin(){
+      this.isShowRegister = false
+      this.isShowLogin = true
+    },
+    onRegister(){
+      let result1 = this.validUsername(this.register.username)
+      if(!result1.isValid){
+        this.register.isError = true
+        this.register.notice = result1.notice
+        return
+      }
+      let  result2 = this.validPassword(this.register.password)
+      if(!result2.isValid){
+        this.register.isError = true
+        this.register.notice = result2.notice
+        return
+      }
+      this.register.isError = false
+      this.register.notice = ''
+
+      console.log('开始注册，'+'用户名是'+this.register.username+'密码是'+ this.register.password)
+    },
+    onLogin(){
+      let result1 = this.validUsername(this.login.username)
+      if(!result1.isValid){
+        this.login.isError = true
+        this.login.notice = result1.notice
+        return
+      }
+      let  result2 = this.validPassword(this.login.password)
+      if(!result2.isValid){
+        this.login.isError = true
+        this.login.notice = result2.notice
+        return
+      }
+      this.login.isError = false
+      this.login.notice = ''
+
+      console.log('开始登录，'+'用户名是'+this.login.username+'密码是'+ this.login.password)
+    },
+    validUsername(username){
+      return {
+        isValid:/^[a-zA-z_0-9\u4e00-\u9fa5]{3,15}$/.test(username),
+        notice:'用户名必须是3~15个字符，仅限于字母数字下划线中文'
+      }
+    },
+    validPassword(password){
+      return {
+        isValid:/^.{6,16}$/.test(password),
+        notice:'密码长度为6~16个字符'
       }
     }
   }
@@ -82,7 +140,7 @@ export default {
 
   .main {
     flex: 1;
-    background: rgb(78,147,176) url(//www.hualigs.cn/image/6177cc9e600f1.jpg) center center no-repeat;
+    background: rgb(78,147,176) url(https://b2.kuibu.net/file/imgdisk/imgs/2021/11/7da7f65e2a6dfa3b.jpg) center center no-repeat;
     background-size: contain;
   }
 
