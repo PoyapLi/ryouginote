@@ -6,19 +6,23 @@
         <div class="main"></div>
         <div class="form">
           <h3 @click="showRegister">创建账户</h3>
-          <div v-show="isShowRegister" class="register">
-            <input type="text" v-model="register.username" placeholder="用户名">
-            <input type="password" v-model="register.password" placeholder="密码">
-            <p :class="{error: register.isError}">{{register.notice}}</p>
-            <div class="button" @click="onRegister">创建账号</div>
+          <transition name="slide">
+            <div :class="{show: isShowRegister}" class="register">
+              <input type="text" v-model="register.username" placeholder="用户名">
+              <input type="password" v-model="register.password" placeholder="密码">
+              <p :class="{error: register.isError}">{{register.notice}}</p>
+              <div class="button" @click="onRegister">创建账号</div>
           </div>
+          </transition>
           <h3 @click="showLogin">登录</h3>
-          <div v-show="isShowLogin" class="login">
-            <input type="text" v-model="login.username" placeholder="输入用户名">
-            <input type="password" v-model="login.password" placeholder="密码">
-            <p :class="{error: login.isError}">{{login.notice}}</p>
-            <div class="button" @click="onLogin"> 登录</div>
-          </div>
+          <transition name="slide">
+            <div :class="{show: isShowLogin}" class="login">
+              <input type="text" v-model="login.username" placeholder="输入用户名">
+              <input type="password" v-model="login.password" placeholder="密码">
+              <p :class="{error: login.isError}">{{login.notice}}</p>
+              <div class="button" @click="onLogin"> 登录</div>
+            </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -147,6 +151,7 @@ export default {
   .form {
     width: 270px;
     border-left: 1px solid #ccc;
+    overflow: hidden;
 
     h3 {
       padding: 10px 20px;
@@ -173,8 +178,15 @@ export default {
     }
 
     .login, .register {
-      padding: 10px 20px;
+      padding: 0 20px;
       border-top: 1px solid #eee;
+        height:0;
+        overflow:hidden;
+        transition: height .4s;
+
+        &.show {
+          height:193px;
+        }
 
       input {
         display: block;
