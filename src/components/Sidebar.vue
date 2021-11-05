@@ -14,16 +14,15 @@
 
 <script>
 import Avatar from "./Avatar";
-import request from '@/helpers/request';
+import Auth from '@/apis/auth';
 
 export default {
   components: {Avatar},
   methods:{
     logout(){
-      request('/auth/logout')
-        .then(data => {
-          console.log(data)
-        })
+      Auth.logout().then(data => {
+        console.log(data)
+      })
     }
   }
 }

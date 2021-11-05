@@ -32,9 +32,11 @@
 
 <script>
 
-import request from '@/helpers/request';
+import Auth from '@/apis/auth';
 
-request('/auth').then(data=>{console.log(data)})
+Auth.getInfo().then(data => {
+  console.log(data)
+})
 
 export default {
   name:'Login',
@@ -82,13 +84,13 @@ export default {
       this.register.notice = ''
 
       console.log('开始注册，'+'用户名是'+this.register.username+'密码是'+ this.register.password)
-      request('/auth/register','POST',
+      Auth.register(
         {
           username: this.register.username,
           password: this.register.password
-        }).then(data=>{
-        console.log(data)
-      })
+        }).then(data => {
+          console.log(data)
+        })
     },
     onLogin(){
       let result1 = this.validUsername(this.login.username)
@@ -107,12 +109,12 @@ export default {
       this.login.notice = ''
 
       console.log('开始登录，'+'用户名是'+this.login.username+'密码是'+ this.login.password)
-      request('/auth/login','POST',
+      Auth.login(
         {
-          username: this.login.username,
-          password: this.login.password
-        }).then(data=>{
-          console.log(data)
+          username: this.register.username,
+          password: this.register.password
+        }).then(data => {
+        console.log(data)
         })
     },
     validUsername(username){
