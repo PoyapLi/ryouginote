@@ -33,10 +33,7 @@
 <script>
 
 import Auth from '@/apis/auth';
-
-Auth.getInfo().then(data => {
-  console.log(data)
-})
+import Bus from '@/helpers/bus';
 
 export default {
   name:'Login',
@@ -80,17 +77,19 @@ export default {
         this.register.notice = result2.notice
         return
       }
-      this.register.isError = false
-      this.register.notice = ''
 
-      console.log('开始注册，'+'用户名是'+this.register.username+'密码是'+ this.register.password)
       Auth.register(
         {
           username: this.register.username,
           password: this.register.password
         }).then(data => {
-          console.log(data)
-        })
+          this.register.isError = false
+          this.register.notice = ''
+          this.$router.push({ path: 'notebooks' })
+        }).catch(data => {
+          this.register.isError = true
+          this.register.notice = data.msg
+      })
     },
     onLogin(){
       let result1 = this.validUsername(this.login.username)
@@ -105,17 +104,20 @@ export default {
         this.login.notice = result2.notice
         return
       }
-      this.login.isError = false
-      this.login.notice = ''
 
-      console.log('开始登录，'+'用户名是'+this.login.username+'密码是'+ this.login.password)
       Auth.login(
         {
-          username: this.register.username,
-          password: this.register.password
+          username: this.login.username,
+          password: this.login.password
         }).then(data => {
-        console.log(data)
-        })
+          this.login.isError = false
+          this.login.notice = ''
+          Bus.$emit('userInfo', {username: this.login.username})
+          this.$router.push({ path: 'notebooks' })
+        }).catch(data => {
+          this.login.isError = true
+          this.login.notice = data.msg
+      })
     },
     validUsername(username){
       return {
@@ -165,7 +167,7 @@ export default {
 
   .main {
     flex: 1;
-    background: rgb(78,147,176) url(https://b2.kuibu.net/file/imgdisk/imgs/2021/11/7da7f65e2a6dfa3b.jpg) center center no-repeat;
+    background: rgb(78,147,176) url(https://t1.picb.cc/uploads/2021/11/05/wDuiTL.jpg) center center no-repeat;
     background-size: contain;
   }
 

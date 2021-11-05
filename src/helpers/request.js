@@ -5,6 +5,7 @@ console.log(baseURLConfig)
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.baseURL = baseURLConfig.baseURL
+// 跨域加 cookie 保持登录状态
 axios.defaults.withCredentials = true
 
 export default function request(url, type = 'GET', data = {}){
