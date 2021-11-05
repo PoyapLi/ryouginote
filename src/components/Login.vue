@@ -34,10 +34,7 @@
 
 import request from '@/helpers/request';
 
-request('/auth/login','POST',{username: 'hunger', password:'123456'})
-.then(data=>{
-  console.log(data)
-})
+request('/auth').then(data=>{console.log(data)})
 
 export default {
   name:'Login',
@@ -85,6 +82,13 @@ export default {
       this.register.notice = ''
 
       console.log('开始注册，'+'用户名是'+this.register.username+'密码是'+ this.register.password)
+      request('/auth/register','POST',
+        {
+          username: this.register.username,
+          password: this.register.password
+        }).then(data=>{
+        console.log(data)
+      })
     },
     onLogin(){
       let result1 = this.validUsername(this.login.username)
@@ -103,6 +107,13 @@ export default {
       this.login.notice = ''
 
       console.log('开始登录，'+'用户名是'+this.login.username+'密码是'+ this.login.password)
+      request('/auth/login','POST',
+        {
+          username: this.login.username,
+          password: this.login.password
+        }).then(data=>{
+          console.log(data)
+        })
     },
     validUsername(username){
       return {
