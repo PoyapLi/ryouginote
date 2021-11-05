@@ -21,6 +21,7 @@ export default {
   methods:{
     logout(){
       Auth.logout().then(data => {
+        this.$router.push({path:'login'})
         console.log(data)
       })
     }
@@ -36,7 +37,7 @@ export default {
   position: relative;
   width: 68px;
   text-align: center;
-  background-color: #2c333c;
+  background-color: #2d7d97;
 
 
   .icons {
@@ -50,7 +51,7 @@ export default {
 
 
     .router-link-active {
-      background-color: #5e6266;
+      background-color: rgb(106,172,193);
     }
 
 
