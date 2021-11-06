@@ -32,6 +32,7 @@
 <script>
 
 import Auth from '@/apis/auth';
+import Notebooks from '@/apis/notebooks'
 
 export default {
   data () {
