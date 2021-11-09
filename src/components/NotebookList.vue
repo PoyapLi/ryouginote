@@ -11,8 +11,8 @@
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
               <span>{{ notebook.noteCounts }}</span>
-              <span class="action" @click.stop.prevent="onEdit(notebook)">编辑</span>
-              <span class="action" @click.stop.prevent="onDelete(notebook)">删除</span>
+              <span class="actionE" @click.stop.prevent="onEdit(notebook)">编辑</span>
+              <span class="actionD" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="date">{{ notebook.friendlyCreatedAt }}</span>
             </div>
           </router-link>
@@ -32,7 +32,6 @@ export default {
   data () {
     return {
       notebooks:[],
-      msg: '笔记本列表'
     }
   },
 
@@ -47,49 +46,54 @@ export default {
     Notebooks.getAll()
       .then(res => {
         this.notebooks = res.data
-        console.log(res.data)
       })
   },
 
   methods:{
     onCreate(){
-      let title = window.prompt('创建笔记本')
-      if(title.trim() === ''){
-        alert('笔记本名不能为空')
-        return
-      }
-      Notebooks.addNotebook({title})
-        .then(res => {
-          console.log(res)
-          res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
-          this.notebooks.unshift(res.data)
-          alert(res.msg)
-        })
+      this.$prompt('请输入新标题', '创建笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputErrorMessage: '标题不能为空，且不能超过30个字符'
+      }).then(({ value }) => {
+        return Notebooks.addNotebook({title: value})
+      }).then(res => {
+        res.data.friendlyCreatedAt = friendlyDate(res.data.createdAt)
+        this.notebooks.unshift(res.data)
+        this.$message.success(res.msg)
+      })
     },
 
     onEdit(notebook){
-      console.log('修改笔记本')
-      let title = window.prompt('修改标题', notebook.title)
-      Notebooks.updateNotebook(notebook.id, {title})
-        .then(res => {
-          console.log(res)
-          notebook.title = title
-          alert(res.msg)
-        })
-
+      let title = ''
+      this.$prompt('请输入新标题', '修改笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputValue: notebook.title,
+        inputErrorMessage: '标题不能为空，且不能超过30个字符'
+      }).then(({ value }) => {
+        title = value
+        return Notebooks.updateNotebook(notebook.id,{title})
+      }).then(res => {
+        notebook.title = title
+        this.$message.success(res.msg)
+      })
     },
 
     onDelete(notebook){
-      console.log('删除笔记本')
-      let isConfirm = window.confirm('确定要删除吗？')
-      if(isConfirm) {
-        Notebooks.deleteNotebook(notebook.id)
-          .then(res => {
-            console.log(res)
-            this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
-            alert(res.msg)
-          })
-      }
+      this.$confirm('确认要删除当前笔记吗？', '删除笔记', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(()=>{
+        return Notebooks.deleteNotebook(notebook.id)
+      }).then(res => {
+        console.log(res)
+        this.notebooks.splice(this.notebooks.indexOf(notebook), 1)
+        this.$message.success(res.msg)
+      })
     }
   }
 

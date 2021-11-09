@@ -167,7 +167,7 @@ export default {
 
   .main {
     flex: 1;
-    background: rgb(78,147,176) url(https://t1.picb.cc/uploads/2021/11/05/wDuiTL.jpg) center center no-repeat;
+    background: rgb(78,147,176) url(https://b2.kuibu.net/file/imgdisk/imgs/2021/11/86c94e705ba01f63.jpg) center center no-repeat;
     background-size: contain;
   }
 

@@ -13,7 +13,8 @@ export default {
     return new Promise((resolve, reject) => {
       request(URL.GET)
         .then(res => {
-          res.data = res.data.sort((notebooks1, notebooks2) => notebooks1.createdAt < notebooks2.createdAt )
+          // 这样写也可以 res.data = res.data.sort((a,b)=> b.createdAt.localeCompare(a.createdAt))
+          res.data = res.data.sort((a,b)=> a.createdAt <  b.createdAt ? 1 : -1)
           res.data.forEach(notebook => {
               notebook.friendlyCreatedAt = friendlyDate(notebook.createdAt)
             })
