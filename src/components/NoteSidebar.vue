@@ -28,6 +28,7 @@
 <script>
 
 import Notebooks from '@/apis/notebooks';
+import Notes from '@/apis/notes';
 
 export default {
   created(){
