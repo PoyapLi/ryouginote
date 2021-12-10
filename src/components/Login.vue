@@ -12,7 +12,7 @@
               <input type="password" v-model="register.password" placeholder="密码">
               <p :class="{error: register.isError}">{{register.notice}}</p>
               <div class="button" @click="onRegister">创建账号</div>
-          </div>
+            </div>
           </transition>
           <h3 @click="showLogin">登录</h3>
           <transition name="slide">
@@ -93,6 +93,8 @@ export default {
     },
     onLogin(){
       let result1 = this.validUsername(this.login.username)
+      // 因为 if 里的条件为 true 的时候才能进入函数体，要用 ! 取反
+      // 校验用户名小于 3 位时为 false，要触发提示信息，要取反后进入函数体进行提示操作
       if(!result1.isValid){
         this.login.isError = true
         this.login.notice = result1.notice

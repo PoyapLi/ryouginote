@@ -1,6 +1,7 @@
 <template>
   <div id="trash-detail">
     <h1>noteId : {{ $route.query.noteId }}</h1>
+    <h1>{{msg}}</h1>
   </div>
 </template>
 

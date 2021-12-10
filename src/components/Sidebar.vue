@@ -2,9 +2,9 @@
     <div id="sidebar">
       <Avatar/>
       <div class="icons">
-        <router-link to="/note/1" title="笔记"><i class="iconfont icon-note"></i></router-link>
+        <router-link to="/note" title="笔记"><i class="iconfont icon-note"></i></router-link>
         <router-link to="/notebooks" title="笔记本"><i class="iconfont icon-notebook"></i></router-link>
-        <router-link to="/trash/2" title="回收站"><i class="iconfont icon-trash"></i></router-link>
+        <router-link to="/trash" title="回收站"><i class="iconfont icon-trash"></i></router-link>
       </div>
       <div class="logout" >
         <i class="iconfont icon-logout" @click="logout"></i>
@@ -39,21 +39,17 @@ export default {
   text-align: center;
   background-color: #2d7d97;
 
-
   .icons {
     margin-top: 15px;
-
 
     a {
       padding: 6px 0;
       display: block;
     }
 
-
     .router-link-active {
       background-color: rgb(106,172,193);
     }
-
 
   }
 
