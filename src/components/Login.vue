@@ -169,7 +169,8 @@ export default {
 
   .main {
     flex: 1;
-    background: rgb(78,147,176) url(https://b2.kuibu.net/file/imgdisk/imgs/2021/11/86c94e705ba01f63.jpg) center center no-repeat;
+    //在线封面图地址 https://b2.kuibu.net/file/imgdisk/imgs/2021/11/86c94e705ba01f63.jpg
+    background: rgb(78,147,176) url(../assets/images/notebook.jpg) center center no-repeat;
     background-size: contain;
   }
 
