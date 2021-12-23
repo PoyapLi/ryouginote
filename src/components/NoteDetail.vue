@@ -7,15 +7,15 @@
         <div class="note-bar">
           <span> 创建日期: {{ curNote.createdAtFriendly }} </span>
           <span> 更新日期: {{ curNote.updatedAtFriendly }} </span>
-          <span> {{ curNote.statusText }} </span>
+          <span> {{ statusText }} </span>
           <span class="iconfont icon-delete" ></span>
           <span class="iconfont icon-fullscreen" ></span>
         </div>
         <div class="note-title">
-          <input type="text" v-model:value="curNote.title" placeholder="输入标题">
+          <input type="text" v-model:value="curNote.title" @input="updateNote" placeholder="输入标题">
         </div>
         <div class="editor">
-          <textarea v-show="true" :value="curNote.content" placeholder="输入内容, 支持 markdown 语法"></textarea>
+          <textarea v-show="true" :value="curNote.content" @input="updateNote" placeholder="输入内容, 支持 markdown 语法"></textarea>
           <div class="preview markdown-body" v-html="" v-show="false"></div>
         </div>
       </div>
@@ -27,13 +27,18 @@
 
 import Auth from '@/apis/auth';
 import NoteSidebar from "@/components/NoteSidebar";
-import Bus from '@/helpers/bus';
+import Bus from '../helpers/bus';
+import _ from 'lodash';
+import Notes from '@/apis/notes'
+
+window.Notes = Notes
 
 export default {
   data () {
     return {
       curNote:{},
-      notes:[]
+      notes:[],
+      statusText:'笔记未改动'
     }
   },
   components:{
@@ -46,15 +51,27 @@ export default {
           this.$router.push({ path: '/login'})
         }
       })
+
     Bus.$once('update:notes', val =>{
-      this.curNote = val.find(note => note.id.toString() === this.$route.query.noteId) || {}
-      console.log('curNote:'+this.curNote);
+      this.curNote = val.find(note => note.id == this.$route.query.noteId) || {}
+      console.log('这是 sidebar 传过来的 ',this.curNote)
     })
   },
   beforeRouteUpdate(to,from,next){
-    this.curNote = this.notes.find(note => note.id.toString() === to.query.noteId) || {}
+    this.curNote = this.notes.find(note => note.id == to.query.noteId) || {}
     //放行的意思，没有 next() 代码不会继续下面的流程
     next()
+  },
+  methods: {
+    // 防抖
+    updateNote: _.debounce(function (){
+      Notes.updateNote({noteId: this.curNote.id}, {title: this.curNote.title, content:this.curNote.content})
+        .then(data =>{
+          this.statusText = '已保存'
+        }).catch(data=>{
+          this.statusText = '保存出错'
+        })
+    },300)
   }
 }
 </script>
