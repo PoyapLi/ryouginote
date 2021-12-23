@@ -8,14 +8,14 @@
           <span> 创建日期: {{ curNote.createdAtFriendly }} </span>
           <span> 更新日期: {{ curNote.updatedAtFriendly }} </span>
           <span> {{ statusText }} </span>
-          <span class="iconfont icon-delete" ></span>
+          <span class="iconfont icon-delete" @click="deleteNote "></span>
           <span class="iconfont icon-fullscreen" ></span>
         </div>
         <div class="note-title">
-          <input type="text" v-model:value="curNote.title" @input="updateNote" placeholder="输入标题">
+          <input type="text" v-model:value="curNote.title" @input="updateNote" @keydown="statusText='正在输入...'" placeholder="输入标题">
         </div>
         <div class="editor">
-          <textarea v-show="true" v-model:value="curNote.content" @input="updateNote" placeholder="输入内容, 支持 markdown 语法"></textarea>
+          <textarea v-show="true" v-model:value="curNote.content" @input="updateNote" @keydown="statusText='正在输入...'" placeholder="输入内容, 支持 markdown 语法"></textarea>
           <div class="preview markdown-body" v-html="" v-show="false"></div>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default {
 
     Bus.$once('update:notes', val =>{
       this.curNote = val.find(note => note.id == this.$route.query.noteId) || {}
-      console.log('这是 sidebar 传过来的 ',this.curNote)
+      console.log('这是 sidebar 传过来的 curNote ',this.curNote)
     })
   },
   beforeRouteUpdate(to,from,next){
@@ -65,13 +65,22 @@ export default {
   methods: {
     // 防抖
     updateNote: _.debounce(function (){
-      Notes.updateNote({noteId: this.curNote.id}, {title: this.curNote.title, content:this.curNote.content})
+      Notes.updateNote({noteId: this.curNote.id},
+        {title: this.curNote.title, content:this.curNote.content})
         .then(data =>{
           this.statusText = '已保存'
         }).catch(data=>{
           this.statusText = '保存出错'
         })
-    },300)
+    },300),
+    deleteNote() {
+      Notes.deleteNote({noteId: this.curNote.id})
+        .then(data=>{
+          this.$message.success(data.msg)
+          this.notes.splice(this.notes.indexOf(this.curNote),1)
+          this.$router.replace({path:'/note'})
+        })
+    }
   }
 }
 </script>
