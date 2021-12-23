@@ -15,7 +15,7 @@
           <input type="text" v-model:value="curNote.title" @input="updateNote" placeholder="输入标题">
         </div>
         <div class="editor">
-          <textarea v-show="true" :value="curNote.content" @input="updateNote" placeholder="输入内容, 支持 markdown 语法"></textarea>
+          <textarea v-show="true" v-model:value="curNote.content" @input="updateNote" placeholder="输入内容, 支持 markdown 语法"></textarea>
           <div class="preview markdown-body" v-html="" v-show="false"></div>
         </div>
       </div>
