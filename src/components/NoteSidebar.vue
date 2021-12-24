@@ -2,9 +2,12 @@
   <div class="note-sidebar">
     <span class="btn add-note" @click="addNote">添加笔记</span>
     <el-dropdown class="notebook-title"  @command="handleCommand" placement="bottom">
-      <span class="el-dropdown-link"> {{curBook.title}} <i class="iconfont icon-down"></i></span>
+      <span class="el-dropdown-link">
+        {{curBook.title}} <i class="iconfont icon-down"></i></span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="notebook in notebooks" :command="notebook.id" :key="notebook.id">{{notebook.title}}</el-dropdown-item>
+        <el-dropdown-item v-for="notebook in notebooks"
+                          :command="notebook.id"
+                          :key="notebook.id">{{notebook.title}}</el-dropdown-item>
         <el-dropdown-item  command="trash">回收站</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
