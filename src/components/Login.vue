@@ -9,7 +9,7 @@
           <transition name="slide">
             <div :class="{show: isShowRegister}" class="register">
               <input type="text" v-model="register.username" placeholder="用户名">
-              <input type="password" v-model="register.password" placeholder="密码">
+              <input type="password" v-model="register.password" @keyup.enter="onRegister" placeholder="密码">
               <p :class="{error: register.isError}">{{register.notice}}</p>
               <div class="button" @click="onRegister">创建账号</div>
             </div>
@@ -18,9 +18,9 @@
           <transition name="slide">
             <div :class="{show: isShowLogin}" class="login">
               <input type="text" v-model="login.username" placeholder="输入用户名">
-              <input type="password" v-model="login.password" placeholder="密码">
+              <input type="password" v-model="login.password" @keyup.enter="onLogin" placeholder="密码">
               <p :class="{error: login.isError}">{{login.notice}}</p>
-              <div class="button" @click="onLogin"> 登录</div>
+              <div class="button" @click="onLogin" > 登录</div>
             </div>
           </transition>
         </div>
