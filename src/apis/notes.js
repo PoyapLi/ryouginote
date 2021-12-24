@@ -4,8 +4,8 @@ import {friendlyDate} from '@/helpers/util';
 const URL = {
   GET: '/notes/from/:notebookId',
   ADD: '/notes/to/:notebookId',
-  UPDATE: '/notes/:id',
-  DELETE: '/notes/:id'
+  UPDATE: '/notes/:noteId',
+  DELETE: '/notes/:noteId'
 }
 
 export default {
