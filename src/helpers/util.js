@@ -1,5 +1,5 @@
-export function friendlyDate(datsStr) {
-  let dateObj = typeof datsStr === 'object' ? datsStr : new Date(datsStr)
+export function friendlyDate(dateStr) {
+  let dateObj = typeof dateStr === 'object' ? dateStr : new Date(dateStr)
   let time = dateObj.getTime()
   let now = Date.now()
   let space = now - time
