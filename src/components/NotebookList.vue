@@ -7,7 +7,8 @@
       <div class="layout">
         <h3>笔记本列表（{{notebooks.length}}）</h3>
         <div class="book-list">
-          <router-link v-for="notebook in notebooks" :to="`/note?notebookId=${notebook.id}`" :key="notebook.id" class="notebook">
+          <router-link v-for="notebook in notebooks"
+                       :to="`/note?notebookId=${notebook.id}`" :key="notebook.id" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
               <span>{{ notebook.noteCounts }}</span>
@@ -25,8 +26,6 @@
 <script>
 
 import Auth from '@/apis/auth';
-import Notebooks from '@/apis/notebooks';
-import {friendlyDate} from '@/helpers/util';
 import {mapState, mapActions, mapGetters} from 'vuex';
 
 export default {
@@ -41,6 +40,7 @@ export default {
           this.$router.push({ path: '/login'})
         }
     })
+    // dispatch 触发 actions 里的 getNotebooks
     this.$store.dispatch('getNotebooks')
   },
 
