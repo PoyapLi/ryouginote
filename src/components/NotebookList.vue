@@ -8,13 +8,14 @@
         <h3>笔记本列表（{{notebooks.length}}）</h3>
         <div class="book-list">
           <router-link v-for="notebook in notebooks"
-                       :to="`/note?notebookId=${notebook.id}`" :key="notebook.id" class="notebook">
+                       :to="`/note?notebookId=${notebook.id}`"
+                       :key="notebook.id" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
               <span>{{ notebook.noteCounts }}</span>
               <span class="actionE" @click.stop.prevent="onEdit(notebook)">编辑</span>
               <span class="actionD" @click.stop.prevent="onDelete(notebook)">删除</span>
-              <span class="date">{{ notebook.friendlyCreatedAt }}</span>
+              <span class="date">{{ notebook.createdAtFriendly }}</span>
             </div>
           </router-link>
         </div>
@@ -26,7 +27,7 @@
 <script>
 
 import Auth from '@/apis/auth';
-import {mapState, mapActions, mapGetters} from 'vuex';
+import {mapState, mapActions, mapGetters,mapMutations} from 'vuex';
 
 export default {
   data () {
@@ -76,7 +77,6 @@ export default {
         inputValue: notebook.title,
         inputErrorMessage: '标题不能为空，且不能超过30个字符'
       }).then(({ value }) => {
-        title = value
         this.updateNotebook({notebookId: notebook.id, title:value})
       })
     },
@@ -87,6 +87,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(()=>{
+        console.log(notebook)
         this.deleteNotebook({notebookId: notebook.id})
       })
     }
@@ -96,7 +97,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
   @import url(../assets/css/notebook-list.less);
-
 </style>
