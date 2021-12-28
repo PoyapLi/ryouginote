@@ -34,9 +34,11 @@ export default {
   created(){
     this.getNotebooks()
       .then(()=>{
-        this.$store.commit('setCurBook',{curBookId: this.$route.query.notebookId})
-        this.getNotes({notebookId: this.curBook.id})
-      })
+        this.setCurBook({curBookId: this.$route.query.notebookId})
+        return this.getNotes({notebookId: this.curBook.id})
+      }).then(()=>{
+        this.setCurNote({curNoteId: this.$route.query.noteId})
+    })
   },
   data() {
     return {}
@@ -51,6 +53,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations([
+      'setCurBook',
+      'setCurNote'
+    ]),
     ...mapActions([
       'getNotebooks',
       'getNotes',
@@ -64,6 +70,7 @@ export default {
       this.$store.commit('setCurBook',{curBookId: notebookId})
       this.getNotes({notebookId})
     },
+
     onAddNote(){
       this.addNote({notebookId: this.curBook.id})
     }

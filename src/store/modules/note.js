@@ -13,7 +13,7 @@ const getters = {
     if(!Array.isArray(state.notes)) return {}
     if(!state.curNoteId) return state.notes[0] || {}
     return state.notes.find(note =>
-      note.id.toString() === state.curNoteId) || {}
+      note.id === parseInt(state.curNoteId)) || {}
   }
 }
 
@@ -28,14 +28,14 @@ const mutations = {
 
   updateNote(state, payload){
     let note = state.notes.find(note =>
-      note.id.toString() === payload.noteId) || {}
+      note.id === parseInt(payload.noteId)) || {}
     note.title = payload.title
     note.content = payload.content
   },
 
   deleteNote(state, payload){
     state.notes = state.notes.filter(note =>
-      note.id.toString() !== payload.noteId)
+      note.id !== payload.noteId)
   },
 
   setCurNote(state, payload){
@@ -54,14 +54,12 @@ const actions = {
     return Note.addNote({notebookId: payload.notebookId},{title: payload.title, content: payload.content})
       .then(res => {
         commit('addNote',{note: res.data})
-        Message.success(res.msg)
       })
   },
   updateNote({commit}, payload){
     return Note.updateNote({noteId:payload.noteId},{title: payload.title, content: payload.content})
       .then(res => {
         commit('updateNote', {noteId: payload.noteId, title: payload.title, content: payload.content})
-        Message.success(res.msg)
       })
   },
   deleteNote({commit}, payload){
@@ -70,7 +68,8 @@ const actions = {
         commit('deleteNotebook',{noteId: payload.noteId})
         Message.success(res.msg)
       })
-  }
+  },
+
 }
 
 export default {
