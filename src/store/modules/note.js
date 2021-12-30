@@ -63,9 +63,9 @@ const actions = {
       })
   },
   deleteNote({commit}, payload){
-    return Notebook.deleteNotebook({noteId: payload.noteId})
+    return Note.deleteNote({noteId: payload.noteId})
       .then(res => {
-        commit('deleteNotebook',{noteId: payload.noteId})
+        commit('deleteNote',{noteId: payload.noteId})
         Message.success(res.msg)
       })
   },
