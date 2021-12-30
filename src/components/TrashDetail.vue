@@ -38,7 +38,8 @@
 <script>
 
 import Auth from '@/apis/auth';
-import MarkdownIt from 'markdown-it'
+import MarkdownIt from 'markdown-it';
+import Trash from '@/apis/trash';
 
 let md = new MarkdownIt()
 
