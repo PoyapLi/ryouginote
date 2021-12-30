@@ -1,7 +1,7 @@
 <template>
   <div class="note-sidebar">
     <span class="btn add-note" @click="onAddNote">添加笔记</span>
-    <el-dropdown class="notebook-title"  @command="handleCommand" placement="bottom">
+    <el-dropdown  class="notebook-title"  @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{curBook.title}} <i class="iconfont icon-down"></i></span>
       <el-dropdown-menu slot="dropdown">

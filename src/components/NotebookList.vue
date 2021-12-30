@@ -12,7 +12,7 @@
                        :key="notebook.id" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
-              <span>{{ notebook.noteCounts }}</span>
+              <span class="note-counts">（{{ notebook.noteCounts }}）</span>
               <span class="actionE" @click.stop.prevent="onEdit(notebook)">编辑</span>
               <span class="actionD" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="date">{{ notebook.createdAtFriendly }}</span>

@@ -2,8 +2,6 @@ import axios from 'axios';
 import baseURLConfig from './config-baseURL';
 import {Message} from 'element-ui'
 
-console.log(baseURLConfig)
-
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.baseURL = baseURLConfig.baseURL
 // 跨域加 cookie 保持登录状态

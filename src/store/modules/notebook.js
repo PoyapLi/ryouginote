@@ -43,7 +43,7 @@ const mutations = {
 }
 
 const actions = {
-  getNotebooks({commit}){
+  getNotebooks({commit, state}){
     return Notebook.getAll()
       .then(res => {
         commit('setNotebooks',{notebooks: res.data})
