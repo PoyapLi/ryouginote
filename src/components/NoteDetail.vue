@@ -28,7 +28,6 @@
 
 <script>
 
-import Auth from '@/apis/auth';
 import NoteSidebar from "@/components/NoteSidebar";
 import _ from 'lodash';
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
@@ -47,12 +46,7 @@ export default {
     NoteSidebar
   },
   created(){
-    Auth.getInfo()
-      .then(res => {
-        if(!res.isLogin){
-          this.$router.push({ path: '/login'})
-        }
-      })
+    this.checkLogin({path: '/login'})
   },
 
   computed:{
@@ -71,7 +65,8 @@ export default {
     ]),
     ...mapActions([
       'updateNote',
-      'deleteNote'
+      'deleteNote',
+      'checkLogin'
     ]),
     // 防抖
     onUpdateNote: _.debounce(function (){

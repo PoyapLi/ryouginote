@@ -26,7 +26,6 @@
 
 <script>
 
-import Auth from '@/apis/auth';
 import {mapState, mapActions, mapGetters,mapMutations} from 'vuex';
 
 export default {
@@ -35,14 +34,8 @@ export default {
   },
 
   created(){
-    Auth.getInfo()
-      .then(res => {
-        if(!res.isLogin){
-          this.$router.push({ path: '/login'})
-        }
-    })
-    // dispatch 触发 actions 里的 getNotebooks
-    this.$store.dispatch('getNotebooks')
+    this.checkLogin({ path: '/login'})
+    this.getNotebooks()
   },
 
   computed:{
@@ -54,7 +47,8 @@ export default {
       'getNotebooks',
       'addNotebook',
       'updateNotebook',
-      'deleteNotebook'
+      'deleteNotebook',
+      'checkLogin'
     ]),
 
     onCreate(){
