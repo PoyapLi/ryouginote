@@ -2,7 +2,8 @@
   <div id="note" class="detail">
     <note-sidebar @update:notes="val => notes = val"></note-sidebar>
     <div class="note-detail">
-      <div class="note-empty" v-show="!curNote.id">请选择笔记以显示</div>
+      <div class="note-empty" v-show="!curNote.id">请先创建笔记本</div>
+      <div class="note-empty" v-show="!curNote.id">再选择或创建笔记</div>
       <div class="note-detail-ct" v-show="curNote.id">
         <div class="note-bar">
           <span> 创建日期: {{ curNote.createdAtFriendly }} </span>
@@ -52,7 +53,8 @@ export default {
   computed:{
     ...mapGetters([
       'notes',
-      'curNote'
+      'curNote',
+      'curBook'
     ]),
 
     previewContent(){
