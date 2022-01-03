@@ -20,7 +20,7 @@
       <li v-for="note in notes">
         <router-link :to="`/note?noteId=${note.id}&notebookId=${curBook.id}`">
           <span class="date">{{note.updatedAtFriendly}}</span>
-          <span class="title">{{note.title}}</span>
+          <span class="title">{{note.title ? note.title : '请在右侧输入标题'}}</span>
         </router-link>
       </li>
     </ul>

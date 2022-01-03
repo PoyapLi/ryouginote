@@ -10,7 +10,7 @@
         <li v-for="note in trashNotes">
           <router-link :to="`/trash?noteId=${note.id}`">
             <span class="date">{{note.updatedAtFriendly}}</span>
-            <span class="title">{{note.title}}</span>
+            <span class="title">{{note.title ? note.title : '（空）'}}</span>
           </router-link>
         </li>
       </ul>

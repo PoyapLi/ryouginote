@@ -2,24 +2,27 @@
   <div id="note" class="detail">
     <note-sidebar @update:notes="val => notes = val"></note-sidebar>
     <div class="note-detail">
-      <div class="note-empty" v-show="!curNote.id">请先创建笔记本</div>
-      <div class="note-empty" v-show="!curNote.id">再选择或创建笔记</div>
+      <div class="note-empty" v-show="!curNote.id">当前笔记本为空</div>
+      <div class="note-empty" v-show="!curNote.id">请先创建笔记本或笔记</div>
+      <div class="note-empty" v-show="!curNote.id">为保证使用体验请在 PC 端全屏打开</div>
       <div class="note-detail-ct" v-show="curNote.id">
         <div class="note-bar">
-          <span> 创建日期: {{ curNote.createdAtFriendly }} </span>
-          <span> 更新日期: {{ curNote.updatedAtFriendly }} </span>
-          <span> 状态：{{ statusText }} </span>
+          <span> 创建日期: {{ curNote.createdAtFriendly }} | </span>
+          <span> 更新日期: {{ curNote.updatedAtFriendly }} | </span>
+          <span> 保存进度：{{ statusText }} | </span>
+          <span>当前状态：{{isShowPreview ? '预览' : '编辑'}}</span>
           <span class="iconfont icon-trash" @click="onDeleteNote "></span>
           <span class="iconfont" :class="isShowPreview?'icon-edit':'icon-eye'" @click="isShowPreview = !isShowPreview"></span>
         </div>
         <div class="note-title">
-          <input type="text" v-model:value="curNote.title" @input="onUpdateNote"
-                 @keydown="statusText='正在输入...'" placeholder="在此处输入标题">
+          <input type="text" maxlength="11" v-model:value="curNote.title" @input="onUpdateNote"
+                 @keyup="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
         </div>
         <div class="editor">
           <textarea v-show="!isShowPreview" v-model="curNote.content" @input="onUpdateNote"
-                    @keydown="statusText='正在输入...'" placeholder="在此处输入内容，支持 markdown 语法，点击右上角眼睛即可预览"
-                    ></textarea>
+                    @keyup="statusText='正在输入...'"
+                    placeholder="在此处输入内容，支持 markdown 语法，点击右上角眼睛即可预览">
+          </textarea>
           <div class="preview markdown-body" v-html="previewContent" v-show="isShowPreview"></div>
         </div>
       </div>
