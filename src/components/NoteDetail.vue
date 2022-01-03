@@ -16,14 +16,15 @@
         </div>
         <div class="note-title">
           <input type="text" maxlength="11" v-model:value="curNote.title" @input="onUpdateNote"
-                 @keyup="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
+                 @keydown="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
         </div>
         <div class="editor">
-          <textarea v-show="!isShowPreview" v-model="curNote.content" @input="onUpdateNote"
-                    @keyup="statusText='正在输入...'"
-                    placeholder="在此处输入内容，支持 markdown 语法，点击右上角眼睛即可预览">
-          </textarea>
-          <div class="preview markdown-body" v-html="previewContent" v-show="isShowPreview"></div>
+          <codemirror id="codemirror" placeholder="请在此输入内容..." v-model="curNote.content" :options="cmOptions"
+                      v-show="!isShowPreview" @input="onUpdateNote"
+                      @inputRead="statusText='正在输入...'"></codemirror>
+          <markdown-it-vue-light class="preview markdown-body "
+                                 v-show="isShowPreview"
+                                 :content="previewContent"></markdown-it-vue-light>
         </div>
       </div>
     </div>
@@ -35,19 +36,42 @@
 import NoteSidebar from "@/components/NoteSidebar";
 import _ from 'lodash';
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
-import MarkdownIt from 'markdown-it'
-
-let md = new MarkdownIt()
+import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/theme/base16-light.css'
+import placeholder from '../../node_modules/codemirror/addon/display/placeholder.js'
 
 export default {
   data () {
     return {
+      content:'',
       statusText:'笔记未改动',
       isShowPreview: false,
+      cmOptions: {
+        smartIndent: false,
+        electricChars: false,
+        mode: 'text/x-markdown',
+        theme: 'base16-light',
+        lineNumbers: false,
+        line: true,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        extraKeys: {
+          "Tab": function(cm){
+            cm.replaceSelection("  " , "end");
+          }
+        }
+      }
     }
   },
   components:{
     NoteSidebar,
+    MarkdownItVueLight,
+    codemirror,
+    placeholder
   },
   created(){
     this.checkLogin({path: '/login'})
@@ -59,9 +83,8 @@ export default {
       'curNote',
       'curBook'
     ]),
-
     previewContent(){
-      return md.render(this.curNote.content || '')
+      return this.content = this.curNote.content || ''
     }
   },
   methods: {
@@ -82,9 +105,8 @@ export default {
         }).catch(data=>{
           this.statusText = '保存出错'
         })
-    },300),
-
-    onDeleteNote() {
+    },1000),
+  onDeleteNote() {
       this.deleteNote({noteId: this.curNote.id})
         .then(data=>{
           this.$router.replace({path:'/note'})
@@ -107,5 +129,13 @@ export default {
   align-items: stretch;
   background-color: #fff;
   flex: 1;
+}
+#codemirror {
+  height: 100%;
+  font-size: 18px;
+  pre.CodeMirror-placeholder {
+    color: #ccc;
+    font-size: 18px;
+  }
 }
 </style>

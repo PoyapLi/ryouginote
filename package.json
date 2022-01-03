@@ -14,7 +14,9 @@
     "element-ui": "^2.15.6",
     "lodash": "^4.17.21",
     "markdown-it": "^12.3.0",
+    "markdown-it-vue": "^1.1.6",
     "vue": "^2.5.2",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2"
   },
