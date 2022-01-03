@@ -12,7 +12,7 @@
                        :key="notebook.id" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
-              <span class="note-counts">（{{ notebook.noteCounts }}）</span>
+              <span class="note-counts">（{{ notebook.noteCounts ? notebook.noteCounts : 0 }}）</span>
               <span class="actionE" @click.stop.prevent="onEdit(notebook)">编辑</span>
               <span class="actionD" @click.stop.prevent="onDelete(notebook)">删除</span>
               <span class="date">{{ notebook.createdAtFriendly }}</span>
@@ -55,8 +55,8 @@ export default {
       this.$prompt('请输入新标题', '创建笔记本', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputPattern: /^.{1,30}$/,
-        inputErrorMessage: '标题不能为空，且不能超过30个字符'
+        inputPattern: /^.{1,8}$/,
+        inputErrorMessage: '标题不能为空，且不能超过8个字符'
       }).then(({ value }) => {
         this.addNotebook({title: value})
       })
@@ -67,9 +67,9 @@ export default {
       this.$prompt('请输入新标题', '修改笔记本', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputPattern: /^.{1,30}$/,
+        inputPattern: /^.{1,8}$/,
         inputValue: notebook.title,
-        inputErrorMessage: '标题不能为空，且不能超过30个字符'
+        inputErrorMessage: '标题不能为空，且不能超过8个字符'
       }).then(({ value }) => {
         this.updateNotebook({notebookId: notebook.id, title:value})
       })
@@ -81,7 +81,6 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(()=>{
-        console.log(notebook)
         this.deleteNotebook({notebookId: notebook.id})
       })
     }

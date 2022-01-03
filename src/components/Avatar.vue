@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import Auth from '@/apis/auth';
 import {mapGetters, mapActions} from 'vuex';
 
 export default {
@@ -35,12 +34,13 @@ export default {
 <style scoped>
 
 span {
+  cursor: default;
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   text-align: center;
-  line-height: 32px;
-  border-radius: 50%;
+  line-height: 38px;
+  border-radius: 30%;
   background: rgb(106,172,193);
   color: #fff;
   text-shadow: 1px 0 1px rgb(60,126,162);
