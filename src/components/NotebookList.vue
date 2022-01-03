@@ -55,8 +55,8 @@ export default {
       this.$prompt('请输入新标题', '创建笔记本', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputPattern: /^.{1,11}$/,
-        inputErrorMessage: '标题不能为空，且不能超过11个字符'
+        inputPattern: /^.{1,8}$/,
+        inputErrorMessage: '标题不能为空，且不能超过8个字符'
       }).then(({ value }) => {
         this.addNotebook({title: value})
       })
@@ -67,9 +67,9 @@ export default {
       this.$prompt('请输入新标题', '修改笔记本标题', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputPattern: /^.{1,11}$/,
+        inputPattern: /^.{1,8}$/,
         inputValue: notebook.title,
-        inputErrorMessage: '标题不能为空，且不能超过11个字符'
+        inputErrorMessage: '标题不能为空，且不能超过8个字符'
       }).then(({ value }) => {
         this.updateNotebook({notebookId: notebook.id, title:value})
       })
