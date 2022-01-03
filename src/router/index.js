@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Login from '@/components/Login.vue'
-import Notebooks from '@/components/NotebookList.vue'
-import NoteDetail from "@/components/NoteDetail";
-import TrashDetail from "@/components/TrashDetail";
 
 Vue.use(Router)
 // 解决控制台重复路由的报错
@@ -17,23 +12,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld
+      alias:'/notebooks',
+      component: () => import('@/components/NotebookList.vue')
     },
     {
       path: '/login',
-      component: Login
-    },
-    {
-      path:'/notebooks',
-      component:Notebooks
+      component: () => import('@/components/Login.vue')
     },
     {
       path:'/note',
-      component:NoteDetail
+      component: () => import('@/components/NoteDetail.vue')
     },
     {
       path:'/trash',
-      component:TrashDetail
+      component: () => import('@/components/TrashDetail.vue')
     }
   ]
 })
