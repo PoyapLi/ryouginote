@@ -20,7 +20,7 @@
                  @keydown="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
         </div>
         <div class="editor">
-          <codemirror id="codemirror" placeholder="请在此输入内容..."
+          <codemirror ref="refresh" id="codemirror" placeholder="请在此输入内容..."
                       v-model="curNote.content" :options="cmOptions"
                       v-show="!isShowPreview" @input="onUpdateNote"
                       @inputRead="statusText='正在输入...'"></codemirror>
@@ -83,7 +83,6 @@ export default {
   created(){
     this.checkLogin({path: '/login'})
   },
-
   computed:{
     ...mapGetters([
       'notes',
@@ -129,8 +128,17 @@ export default {
   },
   beforeRouteUpdate(to,from,next){
     this.setCurNote({curNoteId: to.query.noteId})
+    //解决 codemirror 需要点击一下才能正常显示的问题
+    this.timer = setTimeout(()=>{
+      this.$refs.refresh.codemirror.refresh()
+    })
     //放行的意思，没有 next() 代码不会继续下面的流程
     next()
+  },
+  beforeDestroy() {
+    // 销毁计时器
+    clearTimeout(this.timer)
+    this.timmer = null
   }
 }
 </script>
