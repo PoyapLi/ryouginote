@@ -22,8 +22,8 @@
         <span>更新日期：{{curTrashNote.updatedAtFriendly}}</span>
         <span> | </span>
         <span>所属笔记本：{{belongTo}}</span>
-        <a class="btn action" @click="onRevert">恢复</a>
-        <a class="btn action" @click="onDelete">彻底删除</a>
+        <a class="btn action atRevert" @click="onRevert">恢复</a>
+        <a class="btn action atDelete" @click="onDelete">彻底删除</a>
       </div>
       <div class="note-title">
         <span>{{curTrashNote.title}}</span>
@@ -138,6 +138,14 @@ export default {
       margin-left: 10px;
       padding: 2px 4px;
       font-size: 12px;
+    }
+    .atRevert{
+      background-color: #50a14f;
+      color:white;
+    }
+    .atDelete{
+      background-color: #de2020;
+      color:white;
     }
   }
 }
