@@ -9,7 +9,7 @@
         <div class="note-bar">
           <span> 创建日期: {{ curNote.createdAtFriendly }} | </span>
           <span> 更新日期: {{ curNote.updatedAtFriendly }} | </span>
-          <span> 保存进度：{{ statusText }}</span>
+          <span> 自动保存进度：{{ statusText }}</span>
           <span class="iconfont icon-trash" @click="onDeleteNote "></span>
           <span  title="点击切换预览/编辑" class="iconfont" :class="isShowPreview ? 'icon-edit':'icon-eye'"
                 @click="isShowPreview = !isShowPreview"></span>
@@ -43,6 +43,9 @@ import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/markdown/markdown.js'
+import 'codemirror/addon/edit/matchbrackets.js'
+import 'codemirror/addon/edit/closebrackets.js'
+import 'codemirror/addon/edit/closetag.js'
 import 'codemirror/theme/base16-light.css'
 import placeholder from '../../node_modules/codemirror/addon/display/placeholder.js'
 
@@ -61,10 +64,11 @@ export default {
         line: true,
         autoCloseBrackets: true,
         matchBrackets: true,
+        autoCloseTags:true,
         extraKeys: {
           "Tab": function(cm){
             cm.replaceSelection("  " , "end");
-          }
+          },
         }
       }
     }
@@ -107,11 +111,18 @@ export default {
         }).catch(data=>{
           this.statusText = '保存出错'
         })
-    },1000),
+    },2000),
   onDeleteNote() {
       this.deleteNote({noteId: this.curNote.id})
-        .then(data=>{
-          this.$router.replace({path:'/note'})
+        .then((data)=>{
+          this.setCurNote()
+          this.$router.replace({
+            path:'/note',
+            query:{
+              noteId: this.curNote.id,
+              notebookId: this.curBook.id
+            }
+          })
         })
     }
   },
