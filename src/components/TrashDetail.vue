@@ -29,7 +29,7 @@
         <span>{{curTrashNote.title}}</span>
       </div>
       <div class="editor">
-        <div class="preview markdown-body" v-html="compiledMarkdown"></div>
+        <markdown-it-vue-light class="preview markdown-body" :content="compiledMarkdown"></markdown-it-vue-light>
       </div>
     </div>
   </div>
@@ -39,14 +39,20 @@
 
 import MarkdownIt from 'markdown-it';
 import {mapGetters, mapActions, mapMutations} from 'vuex';
+import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 
 let md = new MarkdownIt()
 
 export default {
   data () {
-    return {}
+    return {
+      curTrashNoteContent:''
+    }
   },
-
+  components:{
+    MarkdownItVueLight
+  },
   created(){
     this.checkLogin({path:'/login'})
     this.getNotebooks()
@@ -68,7 +74,7 @@ export default {
   ]),
 
     compiledMarkdown(){
-      return md.render(this.curTrashNote.content || '')
+      return this.curTrashNoteContent = this.curTrashNote.content || ''
     }
   },
   methods:{

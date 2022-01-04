@@ -9,17 +9,19 @@
         <div class="note-bar">
           <span> 创建日期: {{ curNote.createdAtFriendly }} | </span>
           <span> 更新日期: {{ curNote.updatedAtFriendly }} | </span>
-          <span> 保存进度：{{ statusText }} | </span>
-          <span>当前状态：{{isShowPreview ? '预览' : '编辑'}}</span>
+          <span> 保存进度：{{ statusText }}</span>
           <span class="iconfont icon-trash" @click="onDeleteNote "></span>
-          <span class="iconfont" :class="isShowPreview?'icon-edit':'icon-eye'" @click="isShowPreview = !isShowPreview"></span>
+          <span  title="点击切换预览/编辑" class="iconfont" :class="isShowPreview ? 'icon-edit':'icon-eye'"
+                @click="isShowPreview = !isShowPreview"></span>
+          <span id="curStatus">{{isShowPreview ? '切换编辑' : '切换预览'}}</span>
         </div>
         <div class="note-title">
           <input type="text" maxlength="11" v-model:value="curNote.title" @input="onUpdateNote"
                  @keydown="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
         </div>
         <div class="editor">
-          <codemirror id="codemirror" placeholder="请在此输入内容..." v-model="curNote.content" :options="cmOptions"
+          <codemirror id="codemirror" placeholder="请在此输入内容..."
+                      v-model="curNote.content" :options="cmOptions"
                       v-show="!isShowPreview" @input="onUpdateNote"
                       @inputRead="statusText='正在输入...'"></codemirror>
           <markdown-it-vue-light class="preview markdown-body "
