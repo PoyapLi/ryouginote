@@ -65,6 +65,7 @@ export default {
         autoCloseBrackets: true,
         matchBrackets: true,
         autoCloseTags:true,
+        lineWrapping:true,
         extraKeys: {
           "Tab": function(cm){
             cm.replaceSelection("  " , "end");
