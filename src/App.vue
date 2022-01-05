@@ -6,12 +6,14 @@
 </template>
 
 <script>
+
 import Sidebar from "./components/Sidebar";
 export default {
   name: 'App',
   components: {Sidebar}
 }
 </script>
+
 
 <style>
 @import '//at.alicdn.com/t/font_3115068_inc8zvmdedn.css';

@@ -37,7 +37,7 @@
 
 import NoteSidebar from "@/components/NoteSidebar";
 import _ from 'lodash';
-import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+import { mapGetters, mapMutations, mapActions} from 'vuex'
 import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 import { codemirror } from 'vue-codemirror'

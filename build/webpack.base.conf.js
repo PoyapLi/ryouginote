@@ -15,6 +15,13 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  // 开始
+  externals:{
+    'vue':'Vue',
+    'axios':'axios',
+    'element-ui':'ELEMENT'
+  },
+  // 结束
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

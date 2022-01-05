@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import Vuex from 'vuex'
 import notebook from './modules/notebook'
 import note from './modules/note'
