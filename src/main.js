@@ -1,14 +1,21 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import {MessageBox,Dropdown,DropdownItem,DropdownMenu,Dialog,Input} from 'element-ui'
 import App from './App'
 import store from './store'
 import router from './router'
 
-Vue.use(ElementUI)
+Vue.use(Dialog)
+Vue.use(Input)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
 Vue.config.productionTip = false
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
 
 /* eslint-disable no-new */
 new Vue({
