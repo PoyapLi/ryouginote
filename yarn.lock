@@ -2910,7 +2910,7 @@
 
 "element-ui@^2.15.6":
   "integrity" "sha512-rcYXEKd/j2G0AgficAOk1Zd1AsnHRkhmrK4yLHmNOiimU2JfsywgfKUjMoFuT6pQx0luhovj8lFjpE4Fnt58Iw=="
-  "resolved" "https://registry.npmjs.org/element-ui/-/element-ui-2.15.6.tgz"
+  "resolved" "https://registry.npmmirror.com/element-ui/download/element-ui-2.15.6.tgz"
   "version" "2.15.6"
   dependencies:
     "async-validator" "~1.8.1"
@@ -4861,7 +4861,7 @@
     "mermaid" "^8.8.4"
     "vue" "^2.6.12"
 
-"markdown-it@^12.0.4", "markdown-it@^12.3.0":
+"markdown-it@^12.0.4":
   "integrity" "sha512-T345UZZ6ejQWTjG6PSEHplzNy5m4kF6zvUpHVDv8Snl/pEU0OxIK0jGg8YLVNwJvT8E0YJC7/2UvssJDk/wQCQ=="
   "resolved" "https://registry.npmmirror.com/markdown-it/download/markdown-it-12.3.0.tgz"
   "version" "12.3.0"

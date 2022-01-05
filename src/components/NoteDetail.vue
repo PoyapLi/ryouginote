@@ -20,7 +20,7 @@
                  @keydown="statusText='正在输入...'" placeholder="在此处输入标题，不能超过11个字符">
         </div>
         <div class="editor">
-          <codemirror id="codemirror" placeholder="请在此输入内容..."
+          <codemirror ref="refresh" id="codemirror" placeholder="请在此输入内容..."
                       v-model="curNote.content" :options="cmOptions"
                       v-show="!isShowPreview" @input="onUpdateNote"
                       @inputRead="statusText='正在输入...'"></codemirror>
@@ -37,7 +37,7 @@
 
 import NoteSidebar from "@/components/NoteSidebar";
 import _ from 'lodash';
-import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 import { codemirror } from 'vue-codemirror'
@@ -129,8 +129,16 @@ export default {
   },
   beforeRouteUpdate(to,from,next){
     this.setCurNote({curNoteId: to.query.noteId})
+    // 解决 codemirror 需要点一下才能正常显示的问题
+    this.timer = setTimeout(()=>{
+      this.$refs.refresh.codemirror.refresh()
+    })
     //放行的意思，没有 next() 代码不会继续下面的流程
     next()
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer)
+    this.timmer = null
   }
 }
 </script>
